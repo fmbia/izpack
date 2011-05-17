@@ -180,22 +180,24 @@ public class TreePacksPanel extends IzPanel implements PacksPanelInterface
     protected void createNormalLayout()
     {
         this.removeAll();
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         createLabel("PacksPanel.info", "preferences", null, null);
         add(Box.createRigidArea(new Dimension(0, 3)));
         createLabel("PacksPanel.tip", "tip", null, null);
         add(Box.createRigidArea(new Dimension(0, 5)));
         tableScroller = new JScrollPane();
+        add(Box.createRigidArea(new Dimension(0, 3)));
         packsTree = createPacksTree(300, tableScroller, null, null);
         if (dependenciesExist)
         {
             dependencyArea = createTextArea("PacksPanel.dependencyList", null, null, null);
         }
         descriptionArea = createTextArea("PacksPanel.description", null, null, null);
+        add(Box.createRigidArea(new Dimension(0, 5)));
         spaceLabel = createPanelWithLabel("PacksPanel.space", null, null);
         if (IoHelper.supported("getFreeSpace"))
         {
-            add(Box.createRigidArea(new Dimension(0, 3)));
+            add(Box.createRigidArea(new Dimension(0, 5)));
             freeSpaceLabel = createPanelWithLabel("PacksPanel.freespace", null, null);
         }
     }
@@ -434,6 +436,8 @@ public class TreePacksPanel extends IzPanel implements PacksPanelInterface
         area.setWrapStyleWord(true);
         area.setBorder(BorderFactory.createTitledBorder(parent.langpack.getString(msgId)));
         area.setFont(getControlTextFont());
+        area.setMinimumSize(tableScroller.getMinimumSize());
+        area.setPreferredSize(tableScroller.getPreferredSize());
 
         if (layout != null && constraints != null)
         {
