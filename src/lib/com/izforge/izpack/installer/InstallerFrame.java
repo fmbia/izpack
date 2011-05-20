@@ -781,17 +781,25 @@ public class InstallerFrame extends JFrame {
 
                 public void run() {
                     JButton cdb = null;
-                    String buttonName = "next";
-                    if (nextButton.isEnabled()) {
+                    String buttonName = "";
+                    nextButton.requestFocusInWindow();
+                   if (nextButton.isEnabled() && (!quitButton.isFocusOwner() || !prevButton.isFocusOwner())) {
                         cdb = nextButton;
-                        quitButton.setDefaultCapable(false);
-                        prevButton.setDefaultCapable(false);
+                        buttonName = "next";
+                        //quitButton.setDefaultCapable(false);
+                        //prevButton.setDefaultCapable(false);
                         nextButton.setDefaultCapable(true);
-                    } else if (quitButton.isEnabled()) {
+                    } else if (quitButton.isEnabled() && quitButton.isFocusOwner()) {
                         cdb = quitButton;
                         buttonName = "quit";
                         quitButton.setDefaultCapable(true);
                         prevButton.setDefaultCapable(false);
+                        nextButton.setDefaultCapable(false);
+                    } else if (prevButton.isEnabled() && prevButton.isFocusOwner()){
+                        cdb =  prevButton;
+                        buttonName = "prev";
+                        quitButton.setDefaultCapable(false);
+                        prevButton.setDefaultCapable(true);
                         nextButton.setDefaultCapable(false);
                     }
                     getRootPane().setDefaultButton(cdb);
